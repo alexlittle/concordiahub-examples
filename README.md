@@ -26,8 +26,11 @@ Then restart the dashboard
 ## Example scripts
 
 The scripts that build the models and load them into the dashboard are in `examples/`.
+
 Run them from the repo root as modules, e.g. `uv run python -m examples.ex01_baseline_heart`.
+
 The LLM examples also need [Ollama](https://ollama.com).
+
 For full explanations see the documentation: https://concordiahub.readthedocs.io/
 
 
