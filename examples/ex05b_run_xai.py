@@ -7,17 +7,18 @@ pre-generated explanations
 import joblib
 import pandas as pd
 
-import concordiahub
+# examples.config sets CONCORDIAHUB_DATA_DIR, so must be before import concordiahub
 from examples import config
+import concordiahub
 from helpers import ICD10_CHAPTERS
 from examples.helpers import  create_confusion_matrix, save_class_report
 from sklearn.metrics import classification_report
 
-raw = pd.read_parquet('./cache/medsynth/xgboost/raw_instances.parquet')
-X_test = pd.read_parquet('./cache/medsynth/xgboost/X_test.parquet')
-y_test = pd.read_parquet('./cache/medsynth/xgboost/y_test.parquet')
-y_pred = pd.read_parquet('./cache/medsynth/xgboost/y_pred.parquet')
-model = joblib.load('./cache/medsynth/xgboost/model.joblib')
+raw = pd.read_parquet(config.CACHE_DIR / 'medsynth/xgboost/raw_instances.parquet')
+X_test = pd.read_parquet(config.CACHE_DIR / 'medsynth/xgboost/X_test.parquet')
+y_test = pd.read_parquet(config.CACHE_DIR / 'medsynth/xgboost/y_test.parquet')
+y_pred = pd.read_parquet(config.CACHE_DIR / 'medsynth/xgboost/y_pred.parquet')
+model = joblib.load(config.CACHE_DIR / 'medsynth/xgboost/model.joblib')
 
 
 y_test["y_test"] = y_test["y_test"].map(

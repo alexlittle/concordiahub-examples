@@ -3,20 +3,21 @@ Script to register the LLM Qwen model with the XAI Lens Framework, from
 pre-generated explanations
 """
 import pandas as pd
-import concordiahub
 
+# examples.config sets CONCORDIAHUB_DATA_DIR, so must be before import concordiahub
 from examples import config
+import concordiahub
 from examples.helpers import safe_dirname, create_confusion_matrix, save_class_report
 from sklearn.metrics import classification_report
 
 current_model = "qwen2.5:14b-instruct-q8_0"
 dir_name = f"llm_{safe_dirname(current_model)}"
 
-raw = pd.read_parquet(f"./cache/heart/{dir_name}/raw_instances_filtered.parquet")
-X = pd.read_parquet(f"./cache/heart/{dir_name}/X_filtered.parquet")
-y = pd.read_parquet(f"./cache/heart/{dir_name}/y_filtered.parquet")
-y_preds = pd.read_parquet(f"./cache/heart/{dir_name}/y_preds_filtered.parquet")
-y_exp = pd.read_parquet(f"./cache/heart/{dir_name}/y_exp_filtered.parquet")
+raw = pd.read_parquet(config.CACHE_DIR / f"heart/{dir_name}/raw_instances_filtered.parquet")
+X = pd.read_parquet(config.CACHE_DIR / f"heart/{dir_name}/X_filtered.parquet")
+y = pd.read_parquet(config.CACHE_DIR / f"heart/{dir_name}/y_filtered.parquet")
+y_preds = pd.read_parquet(config.CACHE_DIR / f"heart/{dir_name}/y_preds_filtered.parquet")
+y_exp = pd.read_parquet(config.CACHE_DIR / f"heart/{dir_name}/y_exp_filtered.parquet")
 
 report = classification_report(y["target"], y_preds["prediction"])
 print(report)

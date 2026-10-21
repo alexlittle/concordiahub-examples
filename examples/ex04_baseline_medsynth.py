@@ -81,10 +81,11 @@ y_test = y_test.to_frame(name='y_test').replace(category_map)
 
 
 # save to files for loading to XAI later
+(config.CACHE_DIR / "medsynth/baseline").mkdir(parents=True, exist_ok=True)
 raw_instances = df.set_index(config.INSTANCE_UUID_COL)[['scenario']].loc[X_test.index]
-raw_instances.reset_index().to_parquet('./cache/medsynth/baseline/raw_instances.parquet')
-X_test.reset_index().to_parquet('./cache/medsynth/baseline/X_test.parquet')
-y_test.reset_index().to_parquet('./cache/medsynth/baseline/y_test.parquet')
-y_pred.reset_index().to_parquet('./cache/medsynth/baseline/y_pred.parquet')
-joblib.dump(model, './cache/medsynth/baseline/model.joblib')
+raw_instances.reset_index().to_parquet(config.CACHE_DIR / 'medsynth/baseline/raw_instances.parquet')
+X_test.reset_index().to_parquet(config.CACHE_DIR / 'medsynth/baseline/X_test.parquet')
+y_test.reset_index().to_parquet(config.CACHE_DIR / 'medsynth/baseline/y_test.parquet')
+y_pred.reset_index().to_parquet(config.CACHE_DIR / 'medsynth/baseline/y_pred.parquet')
+joblib.dump(model, config.CACHE_DIR / 'medsynth/baseline/model.joblib')
 

@@ -3,13 +3,15 @@ XGBoost model for the UCI Cleveland Heart Disease dataset
 """
 
 import pandas as pd
-import concordiahub
+
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report
 from xgboost import XGBClassifier
 
+# examples.config sets CONCORDIAHUB_DATA_DIR, so must be before import concordiahub
 from examples import config
+import concordiahub
 from examples.helpers import (HEART_COLUMN_MAPPINGS,
                               create_confusion_matrix,
                               check_gpu,

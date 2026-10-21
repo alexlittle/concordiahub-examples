@@ -7,11 +7,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
 
-import concordiahub
+
 from examples.helpers import (HEART_COLUMN_MAPPINGS,
                               create_confusion_matrix,
                               save_class_report)
+
+# examples.config sets CONCORDIAHUB_DATA_DIR, so must be before import concordiahub
 from examples import config
+import concordiahub
 
 
 df = pd.read_csv(config.HEART_INPUT_FILE)

@@ -20,7 +20,7 @@ df = pd.read_csv(config.MEDSYNTH_FULL_FILE)
 
 # only run on those that match the test samples from XGboost model
 # as these will be the only ones that appear in the comparison
-xgboost_df = pd.read_parquet('./cache/medsynth/xgboost/y_test.parquet')
+xgboost_df = pd.read_parquet(config.CACHE_DIR / 'medsynth/xgboost/y_test.parquet')
 
 df = df[df['instance_uuid'].isin(xgboost_df['instance_uuid'])].reset_index(drop=True)
 
@@ -106,11 +106,11 @@ y = df[[config.INSTANCE_UUID_COL, "target"]]
 X = df.drop(columns=["target"])
 
 dir_name = f"llm_{safe_dirname(MODEL)}"
-os.makedirs(f"./cache/medsynth/{dir_name}/", exist_ok=True)
+os.makedirs(config.CACHE_DIR / f"medsynth/{dir_name}/", exist_ok=True)
 
 raw_instances = df.set_index(config.INSTANCE_UUID_COL)[['scenario']]
-raw_instances.reset_index().to_parquet(f'./cache/medsynth/{dir_name}/raw_instances.parquet')
-X.to_parquet(f"./cache/medsynth/{dir_name}/X.parquet")
-y.to_parquet(f"./cache/medsynth/{dir_name}/y.parquet")
-pred_outputs_df.to_parquet(f"./cache/medsynth/{dir_name}/y_preds.parquet")
-exp_outputs_df.to_parquet(f"./cache/medsynth/{dir_name}/y_exp.parquet")
+raw_instances.reset_index().to_parquet(config.CACHE_DIR / f'medsynth/{dir_name}/raw_instances.parquet')
+X.to_parquet(config.CACHE_DIR / f"medsynth/{dir_name}/X.parquet")
+y.to_parquet(config.CACHE_DIR / f"medsynth/{dir_name}/y.parquet")
+pred_outputs_df.to_parquet(config.CACHE_DIR / f"medsynth/{dir_name}/y_preds.parquet")
+exp_outputs_df.to_parquet(config.CACHE_DIR / f"medsynth/{dir_name}/y_exp.parquet")

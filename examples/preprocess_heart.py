@@ -36,7 +36,7 @@ columns = [
 ]
 
 # Read in file and match to the columns
-df = pd.read_csv("./data/cleveland-data-downloaded.csv", header=None, names=columns, na_values="?")
+df = pd.read_csv(config.DATA_DIR / "cleveland-data-downloaded.csv", header=None, names=columns, na_values="?")
 
 # Assign a UUID
 df.insert(0, config.INSTANCE_UUID_COL, [str(uuid.uuid4()) for _ in range(len(df))])

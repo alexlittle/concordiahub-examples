@@ -87,10 +87,11 @@ y_pred = pd.DataFrame({'y_pred': y_pred_array}, index=X_test.index).replace(cate
 y_test = y_test.to_frame(name='y_test').replace(category_map)
 
 # save to files for loading to XAI later
+(config.CACHE_DIR / "medsynth/xgboost").mkdir(parents=True, exist_ok=True)
 raw_instances = df.set_index(config.INSTANCE_UUID_COL)[['scenario']].loc[X_test.index]
-raw_instances.reset_index().to_parquet('./cache/medsynth/xgboost/raw_instances.parquet')
-X_test.reset_index().to_parquet('./cache/medsynth/xgboost/X_test.parquet')
-y_test.reset_index().to_parquet('./cache/medsynth/xgboost/y_test.parquet')
-y_pred.reset_index().to_parquet('./cache/medsynth/xgboost/y_pred.parquet')
-joblib.dump(model, './cache/medsynth/xgboost/model.joblib')
+raw_instances.reset_index().to_parquet(config.CACHE_DIR / 'medsynth/xgboost/raw_instances.parquet')
+X_test.reset_index().to_parquet(config.CACHE_DIR / 'medsynth/xgboost/X_test.parquet')
+y_test.reset_index().to_parquet(config.CACHE_DIR / 'medsynth/xgboost/y_test.parquet')
+y_pred.reset_index().to_parquet(config.CACHE_DIR / 'medsynth/xgboost/y_pred.parquet')
+joblib.dump(model, config.CACHE_DIR / 'medsynth/xgboost/model.joblib')
 

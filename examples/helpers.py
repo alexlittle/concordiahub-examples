@@ -8,9 +8,11 @@ import re
 import subprocess
 
 from sklearn.metrics import confusion_matrix
+from pathlib import Path
+
 import seaborn as sns
 import matplotlib.pyplot as plt
-
+from examples import config
 
 # Mapping of Cleveland heart data column int values to their text names
 HEART_COLUMN_MAPPINGS = {
@@ -72,7 +74,7 @@ def safe_dirname(name: str) -> str:
 
 def process_medsynth():
     # original medsynth link: https://huggingface.co/datasets/Ahmad0067/MedSynth/resolve/main/MedSynth_huggingface_final.csv
-    df = pd.read_csv('./data/MedSynth_huggingface_final.csv')
+    df = pd.read_csv(config.DATA_DIR / "MedSynth_huggingface_final.csv")
     df = df.dropna(subset=["Dialogue"]).copy()
     df["ICD10_chapter"] = df["ICD10"].apply(map_icd10_to_chapter)
     df = df.rename(columns={" Note": "Note"})
@@ -134,9 +136,10 @@ def create_confusion_matrix(y_true,
     plt.ylabel("Actual")
     plt.title("Confusion Matrix")
     plt.tight_layout()
-    plt.savefig(f"perf_results/cm_{dataset}_{model}.png", dpi=100)
+    plt.savefig(config.PERF_OUT_DIR / f"cm_{dataset}_{model}.png", dpi=100)
     plt.show()
 
 def save_class_report(report, dataset, model):
-    with open(f"perf_results/classification_{dataset}_{model}.txt", "w") as f:
+
+    with open(config.PERF_OUT_DIR / f"classification_{dataset}_{model}.txt", "w") as f:
         f.write(report)

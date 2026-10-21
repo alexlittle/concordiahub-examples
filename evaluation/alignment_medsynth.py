@@ -4,15 +4,19 @@ Script to report how many of the LLM reported features match those from the clas
 MedSynth
 """
 
+from pathlib import Path
+
 import pandas as pd
+
+DATA_STORE_DIR = Path(__file__).resolve().parents[1] / "data_store"
 
 
 # note identical for LR and XGBoost so only loading from LR here
-input_classical = "../data_store/medsynth_baseline/exp_global_coefficients.csv"
+input_classical = DATA_STORE_DIR / "medsynth_baseline/exp_global_coefficients.csv"
 
 # for the LLMs
-input_gemma = "../data_store/medsynth_llm_gemma3_27b-it-qat/exp_global_llm_reasoning.csv"
-input_qwen = "../data_store/medsynth_llm_qwen2.5_14b-instruct-q8_0/exp_global_llm_reasoning.csv"
+input_gemma = DATA_STORE_DIR / "medsynth_llm_gemma3_27b-it-qat/exp_global_llm_reasoning.csv"
+input_qwen = DATA_STORE_DIR / "medsynth_llm_qwen2.5_14b-instruct-q8_0/exp_global_llm_reasoning.csv"
 
 
 df_classical = pd.read_csv(input_classical)

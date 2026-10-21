@@ -5,20 +5,22 @@ pre-generated explanations
 
 
 import pandas as pd
+
+# examples.config sets CONCORDIAHUB_DATA_DIR, so must be before import concordiahub
+from examples import config
 import concordiahub
 
-from examples import config
 from examples.helpers import safe_dirname
 from helpers import ICD10_CHAPTERS, create_confusion_matrix, save_class_report
 from sklearn.metrics import classification_report
 
 current_model = "qwen2.5:14b-instruct-q8_0"
 dir_name = f"llm_{safe_dirname(current_model)}"
-raw = pd.read_parquet(f'./cache/medsynth/{dir_name}/raw_instances.parquet')
-X = pd.read_parquet(f"./cache/medsynth/{dir_name}/X.parquet")
-y = pd.read_parquet(f"./cache/medsynth/{dir_name}/y.parquet")
-y_pred = pd.read_parquet(f"./cache/medsynth/{dir_name}/y_preds.parquet")
-y_exp = pd.read_parquet(f"./cache/medsynth/{dir_name}/y_exp.parquet")
+raw = pd.read_parquet(config.CACHE_DIR / f'medsynth/{dir_name}/raw_instances.parquet')
+X = pd.read_parquet(config.CACHE_DIR / f"medsynth/{dir_name}/X.parquet")
+y = pd.read_parquet(config.CACHE_DIR / f"medsynth/{dir_name}/y.parquet")
+y_pred = pd.read_parquet(config.CACHE_DIR / f"medsynth/{dir_name}/y_preds.parquet")
+y_exp = pd.read_parquet(config.CACHE_DIR / f"medsynth/{dir_name}/y_exp.parquet")
 
 
 

@@ -4,9 +4,11 @@ pre-generated explanations
 """
 
 import pandas as pd
+
+# examples.config sets CONCORDIAHUB_DATA_DIR, so must be before import concordiahub
+from examples import config
 import concordiahub
 
-from examples import config
 from examples.helpers import safe_dirname, create_confusion_matrix, save_class_report
 from sklearn.metrics import classification_report
 
@@ -14,11 +16,11 @@ current_model = "gemma3:27b-it-qat"
 dir_name = f"llm_{safe_dirname(current_model)}"
 
 # load the cached files previously saved from running ex03_llm_heart.py
-raw = pd.read_parquet(f"./cache/heart/{dir_name}/raw_instances_filtered.parquet")
-X = pd.read_parquet(f"./cache/heart/{dir_name}/X_filtered.parquet")
-y = pd.read_parquet(f"./cache/heart/{dir_name}/y_filtered.parquet")
-y_preds = pd.read_parquet(f"./cache/heart/{dir_name}/y_preds_filtered.parquet")
-y_exp = pd.read_parquet(f"./cache/heart/{dir_name}/y_exp_filtered.parquet")
+raw = pd.read_parquet(config.CACHE_DIR / f"heart/{dir_name}/raw_instances_filtered.parquet")
+X = pd.read_parquet(config.CACHE_DIR / f"heart/{dir_name}/X_filtered.parquet")
+y = pd.read_parquet(config.CACHE_DIR / f"heart/{dir_name}/y_filtered.parquet")
+y_preds = pd.read_parquet(config.CACHE_DIR / f"heart/{dir_name}/y_preds_filtered.parquet")
+y_exp = pd.read_parquet(config.CACHE_DIR / f"heart/{dir_name}/y_exp_filtered.parquet")
 
 # print/save the classification & confusion matrix
 report = classification_report(y["target"], y_preds["prediction"])
