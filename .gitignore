@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+/cache/
+/data/
+/data_store/
+/.idea/
